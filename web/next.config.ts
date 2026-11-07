@@ -14,32 +14,19 @@ const nextConfig: NextConfig = {
       ];
     }
 
-    // 2. In Production:
-    // If a dedicated separate backend domain is explicitly provided (e.g., https://api.daarudoor.com or https://daarudoor-api.vercel.app)
+    // 2. In Production: Proxy to the live backend server
     const liveBackend = (
       process.env.NEXT_PUBLIC_API_URL ||
-      (process.env.NEXT_PUBLIC_ENV === "production"
-        ? process.env.NEXT_PUBLIC_API_LIVE
-        : "")
-    )?.replace(/\/+$/, "");
+      process.env.NEXT_PUBLIC_API_LIVE ||
+      "https://daarudoor-server.vercel.app"
+    ).replace(/\/+$/, "");
 
-    // IMPORTANT: Avoid self-proxy infinite loops!
-    // If liveBackend is empty OR matches the current Vercel domain, DO NOT rewrite internally in Next.js.
-    // Instead, root vercel.json routes /api directly to the backend service.
-    if (
-      liveBackend &&
-      !liveBackend.includes("daarudoor.vercel.app") &&
-      !liveBackend.startsWith("/")
-    ) {
-      return [
-        {
-          source: "/api/:path*",
-          destination: `${liveBackend}/api/:path*`,
-        },
-      ];
-    }
-
-    return [];
+    return [
+      {
+        source: "/api/:path*",
+        destination: `${liveBackend}/api/:path*`,
+      },
+    ];
   },
 };
 
