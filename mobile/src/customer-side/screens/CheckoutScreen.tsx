@@ -10,8 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../../store';
 import { clearCart } from '../../store/slices/cartSlice';
 import { fetchAddresses } from '../../store/slices/addressSlice';
-// @ts-ignore
-import RazorpayCheckout from 'react-native-razorpay';
+import { openRazorpayCheckout } from '../../services/razorpayService';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Platform } from 'react-native';
 
@@ -120,7 +119,7 @@ const CheckoutScreen = ({ navigation }: any) => {
           }
         };
 
-        RazorpayCheckout.open(options).then(async (data: any) => {
+        openRazorpayCheckout(options).then(async (data: any) => {
           // Verify on backend
           const verifyRes = await fetch(`${BASE_URL}/api/payments/verify`, {
             method: 'POST',

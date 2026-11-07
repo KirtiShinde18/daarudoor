@@ -17,7 +17,6 @@
     },
     "android": {
       "package": "com.kirtishinde.daarudoor",
-      "usesCleartextTraffic": true,
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",
         "foregroundImage": "./assets/android-icon-foreground.png",
@@ -45,14 +44,16 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#6A0409"
-    },
     "plugins": [
       "@react-native-community/datetimepicker",
-      "expo-splash-screen",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#6A0409"
+        }
+      ],
       [
         "expo-location",
         {
