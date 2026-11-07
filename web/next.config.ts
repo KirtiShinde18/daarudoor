@@ -1,37 +1,45 @@
 import type { NextConfig } from "next";
 
-const getBackendUrl = () => {
-  // 1. Explicit full API URL if set
-  if (process.env.NEXT_PUBLIC_API_URL) {
-    return process.env.NEXT_PUBLIC_API_URL.replace(/\/+$/, "");
-  }
-
-  // 2. Based on NEXT_PUBLIC_ENV toggle
-  if (process.env.NEXT_PUBLIC_ENV === "production" && process.env.NEXT_PUBLIC_API_LIVE) {
-    return process.env.NEXT_PUBLIC_API_LIVE.replace(/\/+$/, "");
-  }
-  if (process.env.NEXT_PUBLIC_ENV === "development" && process.env.NEXT_PUBLIC_API_LOCAL) {
-    return process.env.NEXT_PUBLIC_API_LOCAL.replace(/\/+$/, "");
-  }
-
-  // 3. Fallbacks based on build mode
-  if (process.env.NODE_ENV === "production") {
-    return (process.env.NEXT_PUBLIC_API_LIVE || "https://daarudoor.vercel.app").replace(/\/+$/, "");
-  }
-
-  return (process.env.NEXT_PUBLIC_API_LOCAL || "http://127.0.0.1:5500").replace(/\/+$/, "");
-};
-
-const backendUrl = getBackendUrl();
-
 const nextConfig: NextConfig = {
   async rewrites() {
-    return [
-      {
-        source: "/api/:path*",
-        destination: `${backendUrl}/api/:path*`,
-      },
-    ];
+    // 1. In Local Development: Proxy /api requests to local Express backend on port 5500
+    if (process.env.NODE_ENV !== "production") {
+      const localBackend =
+        process.env.NEXT_PUBLIC_API_LOCAL || "http://127.0.0.1:5500";
+      return [
+        {
+          source: "/api/:path*",
+          destination: `${localBackend.replace(/\/+$/, "")}/api/:path*`,
+        },
+      ];
+    }
+
+    // 2. In Production:
+    // If a dedicated separate backend domain is explicitly provided (e.g., https://api.daarudoor.com or https://daarudoor-api.vercel.app)
+    const liveBackend = (
+      process.env.NEXT_PUBLIC_API_URL ||
+      (process.env.NEXT_PUBLIC_ENV === "production"
+        ? process.env.NEXT_PUBLIC_API_LIVE
+        : "")
+    )?.replace(/\/+$/, "");
+
+    // IMPORTANT: Avoid self-proxy infinite loops!
+    // If liveBackend is empty OR matches the current Vercel domain, DO NOT rewrite internally in Next.js.
+    // Instead, root vercel.json routes /api directly to the backend service.
+    if (
+      liveBackend &&
+      !liveBackend.includes("daarudoor.vercel.app") &&
+      !liveBackend.startsWith("/")
+    ) {
+      return [
+        {
+          source: "/api/:path*",
+          destination: `${liveBackend}/api/:path*`,
+        },
+      ];
+    }
+
+    return [];
   },
 };
 
