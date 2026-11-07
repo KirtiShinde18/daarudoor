@@ -1,0 +1,155 @@
+--- server/controllers/auth.controller.js
++++ server/controllers/auth.controller.js
+@@ -32,3 +32,3 @@
+             return res.status(401).json({
+                 success: false,
+                 message: process.env.NODE_ENV === PRODUCTION ? "Invalid Credentials" : "User Not Found or Invalid Role"
+@@ -409,2 +409,103 @@
+     }
+ }
++
++//=================================== PHONE LOGIN ===================================
++exports.phoneLoginSendOTP = async (req, res) => {
++    try {
++        const { mobile } = req.body;
++        if (!mobile || !isMobilePhone(mobile, "en-IN")) {
++            return res.status(400).json({ success: false, message: "Valid mobile number is required" });
++        }
++
++        let user = await User.findOne({ mobile, role: "customer" });
++        
++        // Generate OTP
++        const otp = crypto.randomInt(100000, 1000000);
++        const hashOTP = await bcrypt.hash(String(otp), 10);
++        
++        if (!user) {
++            // Create placeholder user
++            const randomPassword = crypto.randomBytes(8).toString('hex');
++            const password = await bcrypt.hash(randomPassword, 10);
++            const placeholderEmail = `${mobile}@placeholder.daarudoor.com`;
++            
++            user = await User.create({
++                name: mobile,
++                mobile,
++                email: placeholderEmail,
++                password,
++                role: "customer",
++                isEmailVerified: true,
++                onboardingCompleted: false
++            });
++        }
++        
++        user.otp = hashOTP;
++        user.otpSendOn = new Date();
++        await user.save();
++        
++        // In a real app, integrate SMS provider here.
++        console.log(`[DEV OTP] for ${mobile}: ${otp}`);
++        
++        res.status(200).json({ 
++            success: true, 
++            message: "OTP sent successfully",
++            devOtp: process.env.NODE_ENV !== PRODUCTION ? otp : undefined
++        });
++    } catch (error) {
++        console.log(error);
++        res.status(500).json({ success: false, message: "Unable to send OTP" });
++    }
++};
++
++exports.phoneLoginVerifyOTP = async (req, res) => {
++    try {
++        const { mobile, otp } = req.body;
++        if (!mobile || !otp) {
++            return res.status(400).json({ success: false, message: "Mobile and OTP are required" });
++        }
++        
++        const user = await User.findOne({ mobile, role: "customer" });
++        if (!user || !user.otp) {
++            return res.status(400).json({ success: false, message: "Invalid request or OTP expired" });
++        }
++        
++        const isMatch = await bcrypt.compare(String(otp), user.otp);
++        if (!isMatch) {
++            return res.status(400).json({ success: false, message: "Invalid OTP" });
++        }
++        
++        const expiryTime = process.env.OTP_EXPIRY || 600;
++        if (differenceInSeconds(new Date(), user.otpSendOn) > expiryTime) {
++            return res.status(400).json({ success: false, message: "OTP has expired" });
++        }
++        
++        user.otp = null;
++        user.otpSendOn = null;
++        await user.save();
++        
++        const token = jwt.sign({ id: user._id, _id: user._id, role: user.role }, process.env.JWT_KEY, { expiresIn: "30d" });
++        
++        res.cookie("CUSTOMER", token, {
++            httpOnly: true,
++            secure: process.env.NODE_ENV === PRODUCTION,
++            maxAge: 1000 * 60 * 60 * 24 * 30
++        });
++        
++        res.status(200).json({
++            success: true,
++            message: "Login successful",
++            token,
++            user: {
++                _id: user._id,
++                name: user.name,
++                email: user.email,
++                mobile: user.mobile,
++                role: user.role,
++                onboardingCompleted: user.onboardingCompleted,
++                birthYear: user.birthYear,
++                gender: user.gender,
++                profilePic: user.profilePic
++            }
++        });
++    } catch (error) {
++        console.log(error);
++        res.status(500).json({ success: false, message: "Unable to verify OTP" });
++    }
++};
++
++exports.updateOnboarding = async (req, res) => {
++    try {
++        const { birthYear, gender } = req.body;
++        if (!birthYear || !gender) {
++            return res.status(400).json({ success: false, message: "Birth year and gender are required" });
++        }
++        
++        const user = await User.findById(req.user);
++        if (!user || user.role !== "customer") {
++            return res.status(404).json({ success: false, message: "User not found" });
++        }
++        
++        const currentYear = new Date().getFullYear();
++        const minLegalAge = 18; // Change as needed
++        if (currentYear - birthYear < minLegalAge) {
++            return res.status(400).json({ success: false, message: `Must be at least ${minLegalAge} years old` });
++        }
++        
++        user.birthYear = birthYear;
++        user.gender = gender;
++        user.onboardingCompleted = true;
++        await user.save();
++        
++        res.status(200).json({
++            success: true,
++            message: "Onboarding completed successfully",
++            user: {
++                _id: user._id,
++                name: user.name,
++                mobile: user.mobile,
++                onboardingCompleted: user.onboardingCompleted,
++                birthYear: user.birthYear,
++                gender: user.gender
++            }
++        });
++    } catch (error) {
++        console.log(error);
++        res.status(500).json({ success: false, message: "Unable to update onboarding" });
++    }
++};

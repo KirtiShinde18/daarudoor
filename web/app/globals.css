@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-dark: var(--primary-dark);
+  --color-primary-light: var(--primary-light);
+  
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-card: var(--card);
+  
+  --color-text-main: var(--text-main);
+  --color-muted: var(--muted);
+  --color-border-main: var(--border-main);
+  
+  --color-error: var(--error);
+  --color-success: var(--success);
+}
+
+:root {
+  --primary: #6A0409;
+  --primary-dark: #370617;
+  --primary-light: #9D0208;
+  
+  --background: #F9FAFB;
+  --surface: #FFFFFF;
+  --card: #FFFFFF;
+  
+  --text-main: #111827;
+  --muted: #6B7280;
+  --border-main: #E5E7EB;
+  
+  --error: #EF4444;
+  --success: #22C55E;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--text-main);
+  --font-sans: var(--font-inter), Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.dark {
+    --background: #000000;
+    --surface: #111111;
+    --card: #181818;
+    
+    --text-main: #FFFFFF;
+    --muted: #A1A1AA;
+    --border-main: #292929;
+    
+    --error: #FF4C4C;
+    --success: #4CAF50;
+}
+
+body {
+  background: var(--background);
+  color: var(--text-main);
+  font-family: var(--font-inter), Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input, button, select, textarea {
+  font-family: inherit;
+}
+
+.premium-card {
+  @apply bg-card border border-border-main shadow-sm rounded-xl transition-shadow hover:shadow-md;
+}
+
+.premium-button {
+  @apply bg-primary text-white rounded-lg px-4 py-2 font-medium transition-all hover:bg-primary-light active:bg-primary-dark disabled:opacity-50;
+}
+
+.premium-input {
+  @apply bg-surface text-text-main border border-border-main rounded-lg px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all;
+}
