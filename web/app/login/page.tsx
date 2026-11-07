@@ -40,7 +40,10 @@ export default function LoginPage() {
     if (response.status === 404) {
       throw new Error("API endpoint not found (404). Please ensure the backend server is running.");
     }
-    throw new Error(text.slice(0, 100) || `Server error (${response.status})`);
+    if (response.status === 500) {
+      throw new Error("Server internal error (500). Please try again or check backend service.");
+    }
+    throw new Error(text.slice(0, 80).replace(/<[^>]*>?/gm, "").trim() || `Server error (${response.status})`);
   };
 
   const handleLogin = async (e: React.FormEvent) => {

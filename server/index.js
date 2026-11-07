@@ -49,6 +49,7 @@ const allowedOrigins = [
     process.env.LIVE_WEBSITE_URL,
     process.env.LOCAL_URL,
     FRONTEND_URL,
+    "https://daarudoor.vercel.app",
 ].filter(Boolean);
 
 console.log("Allowed CORS Origins:", allowedOrigins);
@@ -56,20 +57,26 @@ console.log("Allowed CORS Origins:", allowedOrigins);
 app.use(
     cors({
         origin: function (origin, callback) {
-
-            // React Native / Postman / server-to-server
-            // requests may not have an Origin
+            // React Native / Postman / server-to-server requests may not have an Origin
             if (!origin) {
                 return callback(null, true);
             }
 
-            if (allowedOrigins.includes(origin) || origin.startsWith("http://localhost:") || origin.startsWith("http://127.0.0.1:") || origin.startsWith("http://10.")) {
+            if (
+                allowedOrigins.includes(origin) ||
+                origin.startsWith("http://localhost:") ||
+                origin.startsWith("http://127.0.0.1:") ||
+                origin.startsWith("http://10.") ||
+                origin.startsWith("http://192.168.") ||
+                origin.endsWith(".vercel.app")
+            ) {
                 return callback(null, true);
             }
 
             console.log("❌ CORS blocked:", origin);
 
-            return callback(new Error("Not allowed by CORS"));
+            // Pass false instead of Error to avoid uncaught 500 exceptions
+            return callback(null, false);
         },
 
         credentials: true,
@@ -134,6 +141,24 @@ app.use((req, res) => {
     res.status(404).json({
         success: false,
         message: `Resource not found: ${req.method} ${req.originalUrl}`,
+    });
+});
+
+// ==============================
+// Global Error Handler
+// ==============================
+app.use((err, req, res, next) => {
+    // Safe server-side error logging (never logs tokens, passwords, or secrets)
+    console.error("Server Error:", {
+        message: err.message,
+        path: req.originalUrl,
+        method: req.method,
+    });
+
+    const statusCode = err.status || err.statusCode || 500;
+    res.status(statusCode).json({
+        success: false,
+        message: err.message || "Internal Server Error",
     });
 });
 
