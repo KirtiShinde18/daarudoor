@@ -31,6 +31,18 @@ export default function LoginPage() {
   const [newPassword, setNewPassword] = useState("");
   const [resetToken, setResetToken] = useState("");
 
+  const parseResponse = async (response: Response) => {
+    const contentType = response.headers.get("content-type");
+    if (contentType && contentType.includes("application/json")) {
+      return await response.json();
+    }
+    const text = await response.text();
+    if (response.status === 404) {
+      throw new Error("API endpoint not found (404). Please ensure the backend server is running.");
+    }
+    throw new Error(text.slice(0, 100) || `Server error (${response.status})`);
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -42,7 +54,7 @@ export default function LoginPage() {
         body: JSON.stringify({ email, password }),
         credentials: "include",
       });
-      const data = await response.json();
+      const data = await parseResponse(response);
       if (!response.ok) {
         throw new Error(data.message || "Failed to login");
       }
@@ -74,7 +86,7 @@ export default function LoginPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: email }),
       });
-      const data = await response.json();
+      const data = await parseResponse(response);
       if (!response.ok) throw new Error(data.message || "Failed to send OTP");
       setForgotPasswordStep(2);
       setError(null);
@@ -95,7 +107,7 @@ export default function LoginPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username: email, otp }),
       });
-      const data = await response.json();
+      const data = await parseResponse(response);
       if (!response.ok) throw new Error(data.message || "Failed to verify OTP");
       setResetToken(data.resetToken);
       setForgotPasswordStep(3);
@@ -117,7 +129,7 @@ export default function LoginPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ resetToken, password: newPassword }),
       });
-      const data = await response.json();
+      const data = await parseResponse(response);
       if (!response.ok) throw new Error(data.message || "Failed to reset password");
       setIsForgotPassword(false);
       setForgotPasswordStep(1);

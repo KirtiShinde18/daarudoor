@@ -1,4 +1,4 @@
-const API_URL = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5500'}/api/admin/offers`;
+const API_URL = "/api/admin/offers";
 
 const defaultHeaders = {
   "Content-Type": "application/json",
