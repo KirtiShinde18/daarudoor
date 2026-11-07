@@ -12,6 +12,7 @@ import { requireAuth } from '../../utils/authGuard';
 import { clearAuth } from '../../store/slices/authSlice';
 import { clearCart } from '../../store/slices/cartSlice';
 import { clearAddresses } from '../../store/slices/addressSlice';
+import { getApiBaseUrl } from '../../config/api.config';
 
 const ProfileScreen = () => {
   const { colors, isDark } = useAppTheme();
@@ -29,7 +30,7 @@ const ProfileScreen = () => {
       const token = await AsyncStorage.getItem('token');
       if (!token) return;
 
-      const API_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+      const API_URL = getApiBaseUrl();
 
       const response = await fetch(`${API_URL}/api/auth/customer/me`, {
         headers: {
@@ -54,7 +55,7 @@ const ProfileScreen = () => {
       setLoadingActiveOrders(true);
       const token = await AsyncStorage.getItem('token');
       if (!token) return;
-      const API_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+      const API_URL = getApiBaseUrl();
       const response = await fetch(`${API_URL}/api/customer/orders/active`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });

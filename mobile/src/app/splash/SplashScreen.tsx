@@ -17,6 +17,7 @@ import { RootStackParamList } from '../../navigation';
 import { useAppTheme } from '../../constants/theme';
 import { FONT_FAMILY } from '../../constants/typography';
 import { MaterialIcons } from '@expo/vector-icons';
+import { getApiBaseUrl } from '../../config/api.config';
 
 type SplashScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Splash'>;
 
@@ -46,7 +47,7 @@ const SplashScreen = () => {
         
         if (token && userStr) {
           try {
-            const API_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+            const API_URL = getApiBaseUrl();
             const endpoint = userRole === 'delivery' 
               ? `${API_URL}/api/delivery/profile`
               : `${API_URL}/api/auth/customer/me`;

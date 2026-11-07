@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../store/slices/cartSlice';
 import { requireAuth } from '../../utils/authGuard';
 import { useToast } from '../../providers/ToastProvider';
+import { getApiBaseUrl } from '../../config/api.config';
 
 const SearchScreen = ({ navigation }: any) => {
   const { showToast } = useToast();
@@ -25,11 +26,7 @@ const SearchScreen = ({ navigation }: any) => {
   const fetchProducts = async (query = '') => {
     try {
       setLoading(true);
-      const API_URL = process.env.EXPO_PUBLIC_API_URL || (
-        Platform.OS === 'android'
-          ? 'http://10.0.2.2:5500'
-          : 'http://localhost:5500'
-      );
+      const API_URL = getApiBaseUrl();
       const url = query.trim() 
         ? `${API_URL}/api/customer/products?search=${encodeURIComponent(query.trim())}`
         : `${API_URL}/api/customer/products`;

@@ -9,6 +9,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch } from 'react-redux';
 import { setAuth } from '../../store/slices/authSlice';
+import { getApiBaseUrl } from '../../config/api.config';
 
 const OTPVerificationScreen = () => {
   const { showToast } = useToast();
@@ -33,7 +34,7 @@ const OTPVerificationScreen = () => {
   const handleResend = async () => {
     if (cooldown > 0) return;
     try {
-      const API_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+      const API_URL = getApiBaseUrl();
       const endpoint = mode === 'forgot' ? '/api/auth/forget-password-otp' : '/api/auth/send-otp';
       const res = await fetch(`${API_URL}${endpoint}`, {
         method: 'POST',
@@ -55,7 +56,7 @@ const OTPVerificationScreen = () => {
     if (otp.length !== 6) return;
     setIsLoading(true);
     try {
-      const API_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+      const API_URL = getApiBaseUrl();
       
       if (mode === 'forgot') {
         const res = await fetch(`${API_URL}/api/auth/verify-forget-password-otp`, {

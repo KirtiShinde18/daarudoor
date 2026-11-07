@@ -22,8 +22,9 @@ import { useAppTheme } from '../../constants/theme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, updateQuantity } from '../../store/slices/cartSlice';
+import { getApiBaseUrl } from '../../config/api.config';
 
-const BASE_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+const BASE_URL = getApiBaseUrl();
 
 const ProductDetailsScreen = ({ route, navigation }: any) => {
   const { showToast } = useToast();

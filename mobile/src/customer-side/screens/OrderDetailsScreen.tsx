@@ -9,8 +9,9 @@ import { OrderStatusBadge, ConfirmationModal } from '../../components/ui';
 import { Modal, TextInput } from 'react-native';
 import { BlurView } from 'expo-blur';
 import Animated, { FadeIn, SlideInDown, SlideInUp } from 'react-native-reanimated';
+import { getApiBaseUrl } from '../../config/api.config';
 
-const BASE_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+const BASE_URL = getApiBaseUrl();
 
 const OrderDetailsScreen = ({ navigation, route }: any) => {
   const { showToast } = useToast();

@@ -13,6 +13,7 @@ import { FONT_FAMILY } from '../../constants/typography';
 import { Button } from '../../components/ui';
 import { MaterialIcons } from '@expo/vector-icons';
 import Animated, { FadeInUp } from 'react-native-reanimated';
+import { getApiBaseUrl } from '../../config/api.config';
 
 type GenderNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Gender'>;
 type GenderRouteProp = RouteProp<RootStackParamList, 'Gender'>;
@@ -36,7 +37,7 @@ const GenderScreen = () => {
     
     setIsLoading(true);
     try {
-      const API_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+      const API_URL = getApiBaseUrl();
       
       const response = await fetch(`${API_URL}/api/auth/customer/onboarding`, {
         method: 'POST',

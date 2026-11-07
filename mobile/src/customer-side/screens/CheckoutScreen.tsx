@@ -1,4 +1,5 @@
 import { useToast } from '../../providers/ToastProvider';
+import { getApiBaseUrl } from '../../config/api.config';
 import React, { useState, useMemo, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, ActivityIndicator, Alert } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -51,7 +52,7 @@ const CheckoutScreen = ({ navigation }: any) => {
         throw new Error('Authentication required');
       }
 
-      const BASE_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+      const BASE_URL = getApiBaseUrl();
 
       // 1. Create Order Backend Call
       const createRes = await fetch(`${BASE_URL}/api/payments/create-order`, {

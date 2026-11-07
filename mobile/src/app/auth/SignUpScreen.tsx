@@ -23,6 +23,7 @@ import Animated, {
 import { RootStackParamList } from '../../navigation';
 import { useAppTheme } from '../../constants/theme';
 import { Button, Input } from '../../components/ui';
+import { getApiBaseUrl } from '../../config/api.config';
 
 type SignUpScreenProp = NativeStackNavigationProp<
   RootStackParamList,
@@ -96,11 +97,7 @@ const SignUpScreen = () => {
     setError('');
 
     try {
-      const API_URL = process.env.EXPO_PUBLIC_API_URL || (
-        Platform.OS === 'android'
-          ? 'http://10.0.2.2:5500'
-          : 'http://localhost:5500'
-      );
+      const API_URL = getApiBaseUrl();
 
       console.log("[REGISTER] API Base URL:", API_URL);
       console.log("[REGISTER] Register endpoint:", `${API_URL}/api/auth/customer/register`);

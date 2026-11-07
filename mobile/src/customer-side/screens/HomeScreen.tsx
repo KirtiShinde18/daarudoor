@@ -13,6 +13,7 @@ import { addToCart } from '../../store/slices/cartSlice';
 import { requireAuth } from '../../utils/authGuard';
 import { updateUser } from '../../store/slices/authSlice';
 import { useToast } from '../../providers/ToastProvider';
+import { getApiBaseUrl } from '../../config/api.config';
 
 const CATEGORIES = ['All', 'Beer', 'Lager', 'Ale', 'Craft Beer', 'Premium', 'Offers'];
 
@@ -59,7 +60,7 @@ const HomeScreen = ({ navigation }: any) => {
 
     try {
       const token = await AsyncStorage.getItem('userToken') || await AsyncStorage.getItem('token');
-      const API_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+      const API_URL = getApiBaseUrl();
 
       const response = await fetch(`${API_URL}/api/customer/offers/validate`, {
         method: 'POST',
@@ -163,11 +164,7 @@ const HomeScreen = ({ navigation }: any) => {
     const fetchProducts = async () => {
       try {
         const token = await AsyncStorage.getItem('token');
-        const API_URL = process.env.EXPO_PUBLIC_API_URL || (
-          Platform.OS === 'android'
-            ? 'http://10.0.2.2:5500'
-            : 'http://localhost:5500'
-        );
+        const API_URL = getApiBaseUrl();
         const response = await fetch(`${API_URL}/api/customer/products`, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -185,11 +182,7 @@ const HomeScreen = ({ navigation }: any) => {
     const fetchOffers = async () => {
       try {
         const token = await AsyncStorage.getItem('token');
-        const API_URL = process.env.EXPO_PUBLIC_API_URL || (
-          Platform.OS === 'android'
-            ? 'http://10.0.2.2:5500'
-            : 'http://localhost:5500'
-        );
+        const API_URL = getApiBaseUrl();
         const response = await fetch(`${API_URL}/api/customer/offers/active`, {
           headers: {
             'Authorization': `Bearer ${token}`
@@ -239,7 +232,7 @@ const HomeScreen = ({ navigation }: any) => {
 
     try {
       const token = await AsyncStorage.getItem('token') || await AsyncStorage.getItem('userToken');
-      const API_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+      const API_URL = getApiBaseUrl();
 
       const response = await fetch(`${API_URL}/api/auth/customer/onboarding`, {
         method: 'POST',

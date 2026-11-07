@@ -5,6 +5,7 @@ import { useNavigation, useRoute } from '@react-navigation/native';
 import { useAppTheme } from '../../constants/theme';
 import { Button, Input } from '../../components/ui';
 import { MaterialIcons } from '@expo/vector-icons';
+import { getApiBaseUrl } from '../../config/api.config';
 
 const LoginOTPScreen = () => {
   const { showToast } = useToast();
@@ -21,7 +22,7 @@ const LoginOTPScreen = () => {
     if (!isFormValid) return;
     setIsLoading(true);
     try {
-      const API_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+      const API_URL = getApiBaseUrl();
       const response = await fetch(`${API_URL}/api/auth/send-otp`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

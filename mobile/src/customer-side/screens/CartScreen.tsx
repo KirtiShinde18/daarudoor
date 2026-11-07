@@ -12,6 +12,7 @@ import { requireAuth } from '../../utils/authGuard';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useToast } from '../../providers/ToastProvider';
+import { getApiBaseUrl } from '../../config/api.config';
 
 const CartScreen = () => {
   const items = useSelector((state: RootState) => state.cart.items);
@@ -43,7 +44,7 @@ const CartScreen = () => {
     setLoadingOffer(true);
     try {
       const token = await AsyncStorage.getItem('userToken') || await AsyncStorage.getItem('token');
-      const API_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+      const API_URL = getApiBaseUrl();
       
       const response = await fetch(`${API_URL}/api/customer/offers/validate`, {
         method: 'POST',

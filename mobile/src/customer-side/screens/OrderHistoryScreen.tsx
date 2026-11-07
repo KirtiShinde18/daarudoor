@@ -9,8 +9,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { OrderStatusBadge } from '../../components/ui';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { getApiBaseUrl } from '../../config/api.config';
 
-const BASE_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+const BASE_URL = getApiBaseUrl();
 
 type TabType = 'orders' | 'replacements';
 

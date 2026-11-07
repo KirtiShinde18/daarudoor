@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Button } from '../../components/ui';
 import { useDispatch } from 'react-redux';
 import { updateUser } from '../../store/slices/authSlice';
+import { getApiBaseUrl } from '../../config/api.config';
 
 const EditProfileScreen = () => {
   const { showToast } = useToast();
@@ -55,7 +56,7 @@ const EditProfileScreen = () => {
     setLoading(true);
     try {
       const token = await AsyncStorage.getItem('token');
-      const API_URL = process.env.EXPO_PUBLIC_API_URL || (Platform.OS === 'android' ? 'http://10.0.2.2:5500' : 'http://localhost:5500');
+      const API_URL = getApiBaseUrl();
 
       const payload: any = { name: trimmedName, mobile };
       if (base64Image) {

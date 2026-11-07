@@ -1,13 +1,9 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Platform } from 'react-native';
+import { getApiBaseUrl } from '../config/api.config';
 
-const DEFAULT_LOCAL = Platform.OS === 'android' ? 'http://10.0.2.2:5500/api' : 'http://127.0.0.1:5500/api';
-let BASE_URL = process.env.EXPO_PUBLIC_API_URL || (__DEV__ ? DEFAULT_LOCAL : 'https://api.daarudoor.com/api');
-
-if (BASE_URL && !BASE_URL.endsWith('/api')) {
-  BASE_URL = `${BASE_URL.replace(/\/$/, '')}/api`;
-}
+const rawUrl = getApiBaseUrl();
+const BASE_URL = rawUrl.endsWith('/api') ? rawUrl : `${rawUrl}/api`;
 
 export const apiClient = axios.create({
   baseURL: BASE_URL,

@@ -8,6 +8,7 @@ import { requireAuth } from '../../utils/authGuard';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useToast } from '../../providers/ToastProvider';
+import { getApiBaseUrl } from '../../config/api.config';
 
 const CategoryProductsScreen = ({ route, navigation }: any) => {
   const { showToast } = useToast();
@@ -26,11 +27,7 @@ const CategoryProductsScreen = ({ route, navigation }: any) => {
 
   const fetchProducts = async () => {
     try {
-      const API_URL = process.env.EXPO_PUBLIC_API_URL || (
-        Platform.OS === 'android'
-          ? 'http://10.0.2.2:5500'
-          : 'http://localhost:5500'
-      );
+      const API_URL = getApiBaseUrl();
       const response = await fetch(`${API_URL}/api/customer/products?category=${encodeURIComponent(categoryId)}`);
       const data = await response.json();
       if (data.success) {

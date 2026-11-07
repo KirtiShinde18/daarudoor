@@ -1,12 +1,9 @@
 import { io, Socket } from 'socket.io-client';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Platform } from 'react-native';
-
-const DEFAULT_LOCAL = Platform.OS === 'android' ? 'http://10.0.2.2:5500/api' : 'http://127.0.0.1:5500/api';
-let BASE_API = process.env.EXPO_PUBLIC_API_URL || (__DEV__ ? DEFAULT_LOCAL : 'https://api.daarudoor.com/api');
+import { getApiBaseUrl } from '../config/api.config';
 
 // Strip /api to get socket server origin
-const SOCKET_URL = BASE_API.replace(/\/api\/?$/, '');
+const SOCKET_URL = getApiBaseUrl().replace(/\/api\/?$/, '');
 
 class SocketClientService {
   private socket: Socket | null = null;
