@@ -536,7 +536,7 @@ export default function DeliveryBoysPage() {
           </div>
 
           {/* Search & View Mode Switcher */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3 w-full lg:w-auto">
             <div className="relative flex-1 sm:w-72">
               <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted w-4 h-4" />
               <input

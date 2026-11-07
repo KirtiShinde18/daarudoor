@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LucideIcon } from "lucide-react";
+import { LucideIcon, X, Wine } from "lucide-react";
 import { useEffect, useState } from "react";
 
 export interface NavItem {
@@ -14,9 +14,12 @@ export interface NavItem {
 interface SidebarProps {
   items: NavItem[];
   title: string;
+  onNavigate?: () => void;
+  onClose?: () => void;
+  isMobile?: boolean;
 }
 
-export function Sidebar({ items, title }: SidebarProps) {
+export function Sidebar({ items, title, onNavigate, onClose, isMobile }: SidebarProps) {
   const pathname = usePathname();
   const [profile, setProfile] = useState<{ name: string; email: string; role: string; profilePic: string | null } | null>(null);
 
@@ -47,11 +50,31 @@ export function Sidebar({ items, title }: SidebarProps) {
   };
 
   return (
-    <aside className="w-64 flex-shrink-0 border-r border-border-main bg-surface dark:bg-surface flex flex-col h-full transition-all">
-      <div className="h-16 flex items-center px-6 border-b border-border-main">
-        <span className="text-xl font-bold text-primary dark:text-primary-light tracking-tight">
-          {title}
-        </span>
+    <aside className="w-full h-full flex-shrink-0 border-r border-border-main bg-surface dark:bg-surface flex flex-col transition-all">
+      <div className="h-16 flex items-center justify-between px-5 sm:px-6 border-b border-border-main">
+        <Link 
+          href="/admin/dashboard" 
+          onClick={() => onNavigate?.()}
+          className="flex items-center gap-2.5 min-w-0"
+        >
+          <div className="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center shrink-0 shadow-xs">
+            <Wine className="w-4 h-4" />
+          </div>
+          <span className="text-lg sm:text-xl font-bold text-primary dark:text-primary-light tracking-tight truncate">
+            {title}
+          </span>
+        </Link>
+
+        {onClose && (
+          <button
+            type="button"
+            onClick={onClose}
+            className="p-1.5 text-muted hover:text-text-main rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors lg:hidden focus:outline-none focus:ring-2 focus:ring-primary/30"
+            aria-label="Close sidebar"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        )}
       </div>
       
       <nav className="flex-1 overflow-y-auto py-4 px-3 space-y-1">
@@ -63,21 +86,26 @@ export function Sidebar({ items, title }: SidebarProps) {
             <Link
               key={item.name}
               href={item.href}
+              onClick={() => onNavigate?.()}
               className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors ${
                 isActive
                   ? "bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary-light"
                   : "text-muted hover:bg-surface hover:text-gray-900 dark:text-muted dark:hover:bg-surface dark:hover:text-white"
               }`}
             >
-              <Icon className="w-5 h-5" />
-              {item.name}
+              <Icon className="w-5 h-5 shrink-0" />
+              <span className="truncate">{item.name}</span>
             </Link>
           );
         })}
       </nav>
       
       <div className="p-4 border-t border-border-main">
-        <Link href="/admin/profile" className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-surface transition-colors cursor-pointer group">
+        <Link 
+          href="/admin/profile" 
+          onClick={() => onNavigate?.()}
+          className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-surface transition-colors cursor-pointer group"
+        >
           <div className="w-10 h-10 rounded-full bg-primary-light/20 flex items-center justify-center text-primary font-bold text-sm overflow-hidden border border-primary/20 shrink-0">
             {profile?.profilePic ? (
               // eslint-disable-next-line @next/next/no-img-element

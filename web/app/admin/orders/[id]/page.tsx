@@ -210,11 +210,11 @@ export default function AdminOrderDetailsPage() {
       {/* Main Order Container */}
       <div className="space-y-6 print:hidden">
         {/* Order Header Card */}
-        <div className="premium-card p-6">
+        <div className="premium-card p-4 sm:p-6">
           <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
             <div>
-              <div className="flex items-center gap-3">
-                <h1 className="text-2xl font-bold tracking-tight text-text-main">
+              <div className="flex flex-wrap items-center gap-3">
+                <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-text-main">
                   Order #{order._id.slice(-6).toUpperCase()}
                 </h1>
                 <OrderStatusBadge status={order.status} />
@@ -226,13 +226,13 @@ export default function AdminOrderDetailsPage() {
             </div>
 
             {/* Quick Status and Assignment Controls */}
-            <div className="flex flex-wrap items-center gap-3">
-              <div>
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+              <div className="flex-1 sm:flex-initial">
                 <label className="block text-[10px] font-semibold uppercase text-muted mb-1">Update Status</label>
                 <select 
                   value={order.status} 
                   onChange={(e) => handleStatusSelectChange(e.target.value)}
-                  className="px-3 py-1.5 border border-border-main rounded-lg text-xs font-semibold bg-surface text-text-main focus:outline-none focus:border-primary"
+                  className="w-full sm:w-auto px-3 py-1.5 border border-border-main rounded-lg text-xs font-semibold bg-surface text-text-main focus:outline-none focus:border-primary"
                 >
                   <option value="PENDING">PENDING</option>
                   <option value="CONFIRMED">CONFIRMED</option>
@@ -247,12 +247,12 @@ export default function AdminOrderDetailsPage() {
                 </select>
               </div>
 
-              <div>
+              <div className="flex-1 sm:flex-initial">
                 <label className="block text-[10px] font-semibold uppercase text-muted mb-1">Delivery Partner</label>
                 <select 
                   value={order.deliveryPartner?._id || ""} 
                   onChange={(e) => handleAssignDeliveryBoy(e.target.value)}
-                  className="px-3 py-1.5 border border-border-main rounded-lg text-xs font-semibold bg-surface text-text-main focus:outline-none focus:border-primary"
+                  className="w-full sm:w-auto px-3 py-1.5 border border-border-main rounded-lg text-xs font-semibold bg-surface text-text-main focus:outline-none focus:border-primary"
                 >
                   <option value="" disabled>Select Delivery Boy</option>
                   {order.deliveryPartner && (
@@ -290,7 +290,7 @@ export default function AdminOrderDetailsPage() {
         </div>
 
         {/* 4 Details Cards: Customer, Address, Partner, Age Check */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           {/* Customer Details */}
           <div className="premium-card p-5">
             <h3 className="font-bold text-xs uppercase tracking-wider text-muted mb-3 flex items-center gap-1.5">
@@ -415,12 +415,12 @@ export default function AdminOrderDetailsPage() {
         </div>
 
         {/* Order Items Table & Financial Summary */}
-        <div className="premium-card p-6">
+        <div className="premium-card p-4 sm:p-6">
           <h3 className="font-bold text-sm text-text-main mb-4 border-b border-border-main pb-3">
             Order Items ({order.products?.length || 0})
           </h3>
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-sm">
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+            <table className="w-full min-w-[480px] text-left text-sm">
               <thead>
                 <tr className="text-xs text-muted uppercase border-b border-border-main">
                   <th className="pb-3">Product</th>
@@ -436,14 +436,14 @@ export default function AdminOrderDetailsPage() {
                       <div className="flex items-center gap-3">
                         {item.image ? (
                           // eslint-disable-next-line @next/next/no-img-element
-                          <img src={item.image} alt={item.name} className="w-10 h-10 object-cover rounded-lg bg-surface border border-border-main" />
+                          <img src={item.image} alt={item.name} className="w-10 h-10 object-cover rounded-lg bg-surface border border-border-main shrink-0" />
                         ) : (
-                          <div className="w-10 h-10 rounded-lg bg-surface border border-border-main flex items-center justify-center text-xs text-muted">
+                          <div className="w-10 h-10 rounded-lg bg-surface border border-border-main flex items-center justify-center text-xs text-muted shrink-0">
                             Img
                           </div>
                         )}
-                        <div>
-                          <p className="font-semibold text-text-main">{item.name}</p>
+                        <div className="min-w-0">
+                          <p className="font-semibold text-text-main truncate">{item.name}</p>
                           {item.volume && <p className="text-xs text-muted">Vol: {item.volume}</p>}
                         </div>
                       </div>
@@ -460,7 +460,7 @@ export default function AdminOrderDetailsPage() {
           </div>
 
           <div className="mt-6 border-t border-border-main pt-6 flex justify-end">
-            <div className="w-72 space-y-2 text-sm">
+            <div className="w-full sm:w-72 space-y-2 text-sm">
               <div className="flex justify-between text-muted text-xs">
                 <span>Subtotal:</span>
                 <span>₹{(order.subtotal || 0).toFixed(2)}</span>

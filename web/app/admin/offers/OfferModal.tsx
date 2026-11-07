@@ -95,27 +95,28 @@ export function OfferModal({ isOpen, onClose, onSubmit, initialData }: OfferModa
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-in fade-in">
-      <div className="bg-surface dark:bg-surface border border-border-main w-full max-w-2xl rounded-2xl shadow-xl max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4 bg-black/50 backdrop-blur-sm animate-in fade-in">
+      <div className="bg-surface dark:bg-surface border border-border-main w-full max-w-2xl rounded-2xl shadow-xl max-h-[92vh] flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-border-main shrink-0">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border-main shrink-0">
           <div>
-            <h2 className="text-xl font-bold text-text-main">
+            <h2 className="text-lg sm:text-xl font-bold text-text-main">
               {initialData ? "Edit Offer" : "Create Offer"}
             </h2>
-            <p className="text-sm text-muted mt-1">Fill in the offer details</p>
+            <p className="text-xs sm:text-sm text-muted mt-0.5">Fill in the offer details</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-muted hover:text-text-main hover:bg-background rounded-xl transition-colors"
+            className="p-1.5 text-muted hover:text-text-main hover:bg-background rounded-xl transition-colors"
+            aria-label="Close"
           >
             <X className="w-5 h-5" />
           </button>
         </div>
 
         {/* Content */}
-        <div className="p-6 overflow-y-auto">
-          <form id="offerForm" onSubmit={handleSubmit} className="space-y-6">
+        <div className="p-4 sm:p-6 overflow-y-auto flex-1">
+          <form id="offerForm" onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
             
             <div className="flex flex-col items-center gap-4">
               <div className="w-full aspect-[21/9] bg-background border-2 border-dashed border-border-main rounded-xl overflow-hidden relative group transition-colors hover:border-primary/50">
@@ -267,13 +268,13 @@ export function OfferModal({ isOpen, onClose, onSubmit, initialData }: OfferModa
         </div>
 
         {/* Footer */}
-        <div className="p-6 border-t border-border-main bg-background/50 rounded-b-2xl shrink-0">
-          <div className="flex justify-end gap-3">
+        <div className="p-3.5 sm:p-5 border-t border-border-main bg-background/50 rounded-b-2xl shrink-0">
+          <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3">
             <button
               type="button"
               onClick={onClose}
               disabled={isSubmitting}
-              className="px-5 py-2.5 text-text-main font-medium border border-border-main rounded-xl hover:bg-background transition-colors disabled:opacity-50"
+              className="w-full sm:w-auto px-5 py-2.5 text-text-main font-medium border border-border-main rounded-xl hover:bg-background transition-colors disabled:opacity-50 text-sm"
             >
               Cancel
             </button>
@@ -281,7 +282,7 @@ export function OfferModal({ isOpen, onClose, onSubmit, initialData }: OfferModa
               type="submit"
               form="offerForm"
               disabled={isSubmitting}
-              className="px-5 py-2.5 bg-primary text-white font-medium rounded-xl hover:bg-primary-light active:bg-primary-dark transition-all disabled:opacity-50 flex items-center gap-2"
+              className="w-full sm:w-auto px-5 py-2.5 bg-primary text-white font-medium rounded-xl hover:bg-primary-light active:bg-primary-dark transition-all disabled:opacity-50 flex items-center justify-center gap-2 text-sm"
             >
               {isSubmitting ? (
                 <>

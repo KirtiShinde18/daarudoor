@@ -173,69 +173,70 @@ export default function LoginPage() {
       </div>
 
       {/* SOUND TOGGLE */}
-      <div className="absolute top-6 right-6 z-50">
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 z-50">
         <button
           onClick={toggleMute}
-          className="flex items-center justify-center w-12 h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white/80 hover:text-white hover:bg-black/60 transition-all duration-300 group"
+          className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-black/40 backdrop-blur-md border border-white/10 text-white/80 hover:text-white hover:bg-black/60 transition-all duration-300 group"
+          aria-label="Toggle Sound"
         >
-          {isMuted ? <VolumeX className="w-5 h-5 group-hover:scale-110 transition-transform" /> : <Volume2 className="w-5 h-5 group-hover:scale-110 transition-transform" />}
+          {isMuted ? <VolumeX className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform" /> : <Volume2 className="w-4 h-4 sm:w-5 sm:h-5 group-hover:scale-110 transition-transform" />}
         </button>
       </div>
 
       {/* CONTENT WRAPPER */}
-      <div className="relative z-10 w-full flex flex-col lg:flex-row lg:justify-between min-h-screen px-6 lg:px-16 xl:px-24">
+      <div className="relative z-10 w-full flex flex-col lg:flex-row lg:justify-between min-h-screen px-4 sm:px-6 lg:px-16 xl:px-24">
         
         {/* LEFT COLUMN - CAPTION & BRANDING */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center pt-16 pb-8 lg:py-12 order-1 lg:order-none">
+        <div className="w-full lg:w-1/2 flex flex-col justify-center pt-12 pb-6 sm:pt-16 sm:pb-8 lg:py-12 order-1 lg:order-none">
           <div className="max-w-xl">
-            <div className="inline-block px-4 py-1.5 border border-[#C92A4A]/30 rounded-full bg-black/40 backdrop-blur-md mb-8">
-              <span className="text-[10px] font-bold tracking-[0.2em] text-[#C92A4A] uppercase">DaaruDoor • Admin Portal</span>
+            <div className="inline-block px-3.5 py-1 border border-[#C92A4A]/30 rounded-full bg-black/40 backdrop-blur-md mb-4 sm:mb-8">
+              <span className="text-[9px] sm:text-[10px] font-bold tracking-[0.2em] text-[#C92A4A] uppercase">DaaruDoor • Admin Portal</span>
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-light text-white mb-6 tracking-wide leading-tight drop-shadow-lg">
+            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-light text-white mb-3 sm:mb-6 tracking-wide leading-tight drop-shadow-lg">
               Raise the Standard.
             </h1>
             
-            <h2 className="text-xl md:text-3xl text-white/90 font-light mb-6 tracking-wide drop-shadow-md">
+            <h2 className="text-base sm:text-2xl lg:text-3xl text-white/90 font-light mb-3 sm:mb-6 tracking-wide drop-shadow-md">
               Premium spirits. Seamless delivery.
             </h2>
             
-            <p className="text-sm md:text-lg text-[#A1A1AA] font-light leading-relaxed max-w-md drop-shadow-md">
+            <p className="text-xs sm:text-base lg:text-lg text-[#A1A1AA] font-light leading-relaxed max-w-md drop-shadow-md">
               Manage your DaaruDoor experience with confidence.
             </p>
           </div>
         </div>
 
         {/* RIGHT COLUMN - LOGIN CARD */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end pb-16 lg:py-12 order-2 lg:order-none">
+        <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end pb-12 sm:pb-16 lg:py-12 order-2 lg:order-none">
           <motion.div
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: "easeOut" }}
             className="w-full max-w-md"
           >
-            <div className="bg-[#111111]/40 backdrop-blur-2xl border border-white/10 rounded-[32px] p-8 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
+            <div className="bg-[#111111]/40 backdrop-blur-2xl border border-white/10 rounded-2xl sm:rounded-[32px] p-5 sm:p-8 md:p-10 shadow-[0_0_50px_rgba(0,0,0,0.5)] relative overflow-hidden">
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[80%] h-[1px] bg-gradient-to-r from-transparent via-[#C92A4A] to-transparent opacity-60"></div>
 
-              <div className="flex items-center gap-4 mb-10 justify-center">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-[#C92A4A] to-[#4A0012] flex items-center justify-center shadow-lg shadow-[#800020]/40 border border-white/20">
-                  <Wine className="w-7 h-7 text-white" />
+              <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-10 justify-center">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br from-[#C92A4A] to-[#4A0012] flex items-center justify-center shadow-lg shadow-[#800020]/40 border border-white/20 shrink-0">
+                  <Wine className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
                 </div>
-                <span className="text-3xl font-bold tracking-[0.2em] text-white drop-shadow-md">DAARUDOOR</span>
+                <span className="text-2xl sm:text-3xl font-bold tracking-[0.2em] text-white drop-shadow-md">DAARUDOOR</span>
               </div>
 
-              <div className="mb-10 text-center">
-                <h2 className="text-2xl font-light text-white mb-2 tracking-wide">
+              <div className="mb-6 sm:mb-10 text-center">
+                <h2 className="text-xl sm:text-2xl font-light text-white mb-1.5 sm:mb-2 tracking-wide">
                   {isForgotPassword ? (forgotPasswordStep === 1 ? "Reset Password" : forgotPasswordStep === 2 ? "Verify OTP" : "New Password") : "Welcome Back"}
                 </h2>
-                <p className="text-sm text-[#A1A1AA]/80 font-light">
+                <p className="text-xs sm:text-sm text-[#A1A1AA]/80 font-light">
                   {isForgotPassword ? "Follow the steps to reset your password" : "Sign in to access your admin portal"}
                 </p>
                 {error && (
                   <motion.p
                     initial={{ opacity: 0, y: -10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    className={`text-sm mt-4 py-2.5 px-4 rounded-xl border backdrop-blur-md ${error.includes("success") ? "text-green-300 bg-green-950/40 border-green-500/20" : "text-red-300 bg-red-950/40 border-red-500/20"}`}
+                    className={`text-xs sm:text-sm mt-4 py-2.5 px-4 rounded-xl border backdrop-blur-md ${error.includes("success") ? "text-green-300 bg-green-950/40 border-green-500/20" : "text-red-300 bg-red-950/40 border-red-500/20"}`}
                   >
                     {error}
                   </motion.p>

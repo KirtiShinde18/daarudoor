@@ -101,18 +101,18 @@ export default function AdminDashboard() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-text-main dark:text-text-main">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-text-main dark:text-text-main">
             Operations Dashboard
           </h1>
-          <p className="text-sm text-muted mt-1">
+          <p className="text-xs sm:text-sm text-muted mt-1">
             Real-time delivery logistics, fleet tracking, and sales analytics
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
           <button
             onClick={handleRefresh}
             disabled={isRefreshing}
-            className="flex items-center gap-2 px-3.5 py-2 text-sm font-medium rounded-lg border border-border-main bg-surface hover:bg-black/5 dark:hover:bg-white/5 transition-colors disabled:opacity-50"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3.5 py-2 text-sm font-medium rounded-lg border border-border-main bg-surface hover:bg-black/5 dark:hover:bg-white/5 transition-colors disabled:opacity-50"
             title="Refresh statistics"
           >
             <RefreshCw className={`w-4 h-4 ${isRefreshing ? "animate-spin text-primary" : "text-muted"}`} />
@@ -120,7 +120,7 @@ export default function AdminDashboard() {
           </button>
           <Link
             href="/admin/orders"
-            className="flex items-center gap-2 px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
+            className="flex-1 sm:flex-initial flex items-center justify-center gap-2 px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-lg text-sm font-medium transition-colors shadow-sm"
           >
             <span>Manage Orders</span>
             <ArrowRight className="w-4 h-4" />
@@ -132,21 +132,21 @@ export default function AdminDashboard() {
       {(stats.awaitingAssignment > 0 || stats.delayedOrdersCount > 0) && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {stats.awaitingAssignment > 0 && (
-            <div className="p-4 rounded-xl border border-amber-200 dark:border-amber-800/60 bg-amber-50/80 dark:bg-amber-950/20 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold">
+            <div className="p-4 rounded-xl border border-amber-200 dark:border-amber-800/60 bg-amber-50/80 dark:bg-amber-950/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-10 h-10 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold shrink-0">
                   <Clock className="w-5 h-5" />
                 </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-text-main">
+                <div className="min-w-0">
+                  <h4 className="text-sm font-semibold text-text-main truncate">
                     {stats.awaitingAssignment} {stats.awaitingAssignment === 1 ? "Order" : "Orders"} Awaiting Assignment
                   </h4>
-                  <p className="text-xs text-muted">Customer orders waiting for a delivery partner</p>
+                  <p className="text-xs text-muted truncate">Customer orders waiting for a delivery partner</p>
                 </div>
               </div>
               <Link
                 href="/admin/orders?deliveryPartnerId=UNASSIGNED"
-                className="px-3 py-1.5 text-xs font-semibold rounded-md bg-amber-500 text-white hover:bg-amber-600 transition-colors"
+                className="px-3.5 py-1.5 text-xs font-semibold rounded-md bg-amber-500 text-white hover:bg-amber-600 transition-colors text-center shrink-0"
               >
                 Assign Now
               </Link>
@@ -154,21 +154,21 @@ export default function AdminDashboard() {
           )}
 
           {stats.delayedOrdersCount > 0 && (
-            <div className="p-4 rounded-xl border border-rose-200 dark:border-rose-800/60 bg-rose-50/80 dark:bg-rose-950/20 flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-lg bg-rose-500/10 text-rose-600 flex items-center justify-center font-bold">
+            <div className="p-4 rounded-xl border border-rose-200 dark:border-rose-800/60 bg-rose-50/80 dark:bg-rose-950/20 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div className="flex items-center gap-3 min-w-0">
+                <div className="w-10 h-10 rounded-lg bg-rose-500/10 text-rose-600 flex items-center justify-center font-bold shrink-0">
                   <AlertCircle className="w-5 h-5" />
                 </div>
-                <div>
-                  <h4 className="text-sm font-semibold text-text-main">
+                <div className="min-w-0">
+                  <h4 className="text-sm font-semibold text-text-main truncate">
                     {stats.delayedOrdersCount} Delayed / Stalled Deliveries
                   </h4>
-                  <p className="text-xs text-muted">Active deliveries inactive for over 45 minutes</p>
+                  <p className="text-xs text-muted truncate">Active deliveries inactive for over 45 minutes</p>
                 </div>
               </div>
               <Link
                 href="/admin/orders?status=OUT_FOR_DELIVERY"
-                className="px-3 py-1.5 text-xs font-semibold rounded-md bg-rose-600 text-white hover:bg-rose-700 transition-colors"
+                className="px-3.5 py-1.5 text-xs font-semibold rounded-md bg-rose-600 text-white hover:bg-rose-700 transition-colors text-center shrink-0"
               >
                 Inspect
               </Link>
@@ -261,7 +261,7 @@ export default function AdminDashboard() {
             View Full Table &rarr;
           </Link>
         </div>
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
+        <div className="grid grid-cols-2 min-[480px]:grid-cols-3 sm:grid-cols-4 lg:grid-cols-8 gap-2.5 sm:gap-3">
           <MiniMetricCard
             title="Total Orders"
             value={stats.totalOrders || 0}
@@ -309,21 +309,21 @@ export default function AdminDashboard() {
       {/* Main Content: Recent Orders & Customers */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Orders */}
-        <div className="lg:col-span-2 premium-card p-6">
+        <div className="lg:col-span-2 premium-card p-4 sm:p-6">
           <div className="flex justify-between items-center mb-5">
             <div>
-              <h2 className="text-lg font-bold text-text-main dark:text-text-main">
+              <h2 className="text-base sm:text-lg font-bold text-text-main dark:text-text-main">
                 Recent Orders
               </h2>
               <p className="text-xs text-muted">Latest 10 orders placed in the system</p>
             </div>
-            <Link href="/admin/orders" className="text-sm font-medium text-primary hover:underline">
-              View All Orders &rarr;
+            <Link href="/admin/orders" className="text-xs sm:text-sm font-medium text-primary hover:underline">
+              View All &rarr;
             </Link>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
+          <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+            <table className="w-full min-w-[560px] text-sm text-left">
               <thead className="text-xs text-muted uppercase bg-surface border-b border-border-main">
                 <tr>
                   <th className="px-4 py-3">Order ID</th>
@@ -387,7 +387,7 @@ export default function AdminDashboard() {
         </div>
 
         {/* Recent Customers */}
-        <div className="premium-card p-6 flex flex-col justify-between">
+        <div className="premium-card p-4 sm:p-6 flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-center mb-5">
               <div>
@@ -460,15 +460,15 @@ function MetricCard({
   badge?: string;
 }) {
   return (
-    <div className="premium-card p-5 flex flex-col justify-between">
+    <div className="premium-card p-4 sm:p-5 flex flex-col justify-between">
       <div className="flex justify-between items-start mb-2">
         <p className="text-xs font-semibold text-muted uppercase tracking-wider">{title}</p>
-        <div className="p-2 bg-surface border border-border-main rounded-lg shadow-2xs">
+        <div className="p-2 bg-surface border border-border-main rounded-lg shadow-2xs shrink-0">
           {icon}
         </div>
       </div>
       <div>
-        <h3 className={`text-2xl font-bold tracking-tight ${colorClass}`}>{value}</h3>
+        <h3 className={`text-xl sm:text-2xl font-bold tracking-tight ${colorClass}`}>{value}</h3>
         <div className="flex items-center justify-between mt-1">
           <p className="text-xs text-muted truncate">{subtitle}</p>
           {badge && (
@@ -494,9 +494,9 @@ function MiniMetricCard({
   highlight?: boolean;
 }) {
   return (
-    <div className={`p-3.5 rounded-xl border bg-card text-center transition-all ${color} ${highlight ? "ring-2 ring-amber-500/50 bg-amber-50/20" : ""}`}>
-      <p className="text-xl font-bold text-text-main">{value}</p>
-      <p className="text-[11px] font-medium text-muted mt-0.5 leading-tight truncate">{title}</p>
+    <div className={`p-2.5 sm:p-3.5 rounded-xl border bg-card text-center transition-all ${color} ${highlight ? "ring-2 ring-amber-500/50 bg-amber-50/20" : ""}`}>
+      <p className="text-lg sm:text-xl font-bold text-text-main">{value}</p>
+      <p className="text-[10px] sm:text-[11px] font-medium text-muted mt-0.5 leading-tight truncate">{title}</p>
     </div>
   );
 }

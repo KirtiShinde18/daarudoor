@@ -432,7 +432,7 @@ export default function AdminOrdersPage() {
       {/* Main Delivery Operations Table */}
       <div className="premium-card overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-sm text-left">
+          <table className="w-full min-w-[850px] text-sm text-left">
             <thead className="text-xs text-muted uppercase bg-surface border-b border-border-main">
               <tr>
                 <th className="px-4 py-3.5">Order ID & Date</th>
@@ -650,21 +650,25 @@ export default function AdminOrdersPage() {
 
       {/* ASSIGN / REASSIGN MODAL */}
       {assignModalOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-surface dark:bg-card w-full max-w-lg rounded-2xl shadow-2xl flex flex-col border border-border-main overflow-hidden">
-            <div className="flex justify-between items-center p-5 border-b border-border-main bg-surface">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+          <div className="bg-surface dark:bg-card w-full max-w-lg rounded-2xl shadow-2xl flex flex-col border border-border-main overflow-hidden max-h-[92vh]">
+            <div className="flex justify-between items-center p-4 sm:p-5 border-b border-border-main bg-surface shrink-0">
               <h3 className="text-base font-bold text-text-main flex items-center gap-2">
                 <Truck className="w-5 h-5 text-primary" />
-                <span>
+                <span className="truncate">
                   {assignModalOrder.deliveryPartner ? "Reassign Delivery Partner" : "Assign Delivery Partner"}
                 </span>
               </h3>
-              <button onClick={() => setAssignModalOrder(null)} className="text-muted hover:text-text-main">
+              <button 
+                onClick={() => setAssignModalOrder(null)} 
+                className="p-1 text-muted hover:text-text-main rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors shrink-0 ml-2"
+                aria-label="Close"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
               <div className="p-3 bg-surface border border-border-main rounded-xl text-xs space-y-1">
                 <p><strong>Order ID:</strong> #{assignModalOrder._id.slice(-6).toUpperCase()}</p>
                 <p><strong>Customer:</strong> {assignModalOrder.customer?.name} ({assignModalOrder.customer?.mobile || "N/A"})</p>
@@ -710,17 +714,17 @@ export default function AdminOrdersPage() {
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 p-4 border-t border-border-main bg-surface">
+            <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3 p-4 border-t border-border-main bg-surface shrink-0">
               <button
                 onClick={() => setAssignModalOrder(null)}
-                className="px-4 py-2 text-sm font-medium rounded-lg border border-border-main hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                className="w-full sm:w-auto px-4 py-2 text-sm font-medium rounded-lg border border-border-main hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleAssignSubmit}
                 disabled={assigningLoading}
-                className="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors shadow-sm disabled:opacity-50"
+                className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors shadow-sm disabled:opacity-50"
               >
                 {assigningLoading ? "Updating..." : "Confirm Assignment"}
               </button>
@@ -731,19 +735,23 @@ export default function AdminOrdersPage() {
 
       {/* UPDATE STATUS MODAL */}
       {statusModalOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-surface dark:bg-card w-full max-w-lg rounded-2xl shadow-2xl flex flex-col border border-border-main overflow-hidden">
-            <div className="flex justify-between items-center p-5 border-b border-border-main bg-surface">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+          <div className="bg-surface dark:bg-card w-full max-w-lg rounded-2xl shadow-2xl flex flex-col border border-border-main overflow-hidden max-h-[92vh]">
+            <div className="flex justify-between items-center p-4 sm:p-5 border-b border-border-main bg-surface shrink-0">
               <h3 className="text-base font-bold text-text-main flex items-center gap-2">
                 <UserCheck className="w-5 h-5 text-primary" />
                 <span>Update Order Status</span>
               </h3>
-              <button onClick={() => setStatusModalOrder(null)} className="text-muted hover:text-text-main">
+              <button 
+                onClick={() => setStatusModalOrder(null)} 
+                className="p-1 text-muted hover:text-text-main rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors shrink-0 ml-2"
+                aria-label="Close"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="p-6 space-y-4">
+            <div className="p-4 sm:p-6 space-y-4 overflow-y-auto flex-1">
               <div className="p-3 bg-surface border border-border-main rounded-xl text-xs space-y-1">
                 <p><strong>Order ID:</strong> #{statusModalOrder._id.slice(-6).toUpperCase()}</p>
                 <p><strong>Current Status:</strong> <OrderStatusBadge status={statusModalOrder.status} /></p>
@@ -817,17 +825,17 @@ export default function AdminOrdersPage() {
               </div>
             </div>
 
-            <div className="flex justify-end gap-3 p-4 border-t border-border-main bg-surface">
+            <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3 p-4 border-t border-border-main bg-surface shrink-0">
               <button
                 onClick={() => setStatusModalOrder(null)}
-                className="px-4 py-2 text-sm font-medium rounded-lg border border-border-main hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+                className="w-full sm:w-auto px-4 py-2 text-sm font-medium rounded-lg border border-border-main hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
               >
                 Cancel
               </button>
               <button
                 onClick={handleStatusSubmit}
                 disabled={updatingStatusLoading || (selectedNewStatus === "FAILED" && !failureReason.trim())}
-                className="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors shadow-sm disabled:opacity-50"
+                className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:bg-primary-dark transition-colors shadow-sm disabled:opacity-50"
               >
                 {updatingStatusLoading ? "Updating..." : "Save Status Transition"}
               </button>
@@ -838,24 +846,28 @@ export default function AdminOrdersPage() {
 
       {/* LIVE ORDER TRACKING MODAL */}
       {trackingModalOrder && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-surface dark:bg-card w-full max-w-3xl rounded-2xl shadow-2xl flex flex-col border border-border-main overflow-hidden max-h-[90vh]">
-            <div className="flex justify-between items-center p-5 border-b border-border-main bg-surface">
-              <div>
-                <h3 className="text-base font-bold text-text-main flex items-center gap-2">
-                  <MapPin className="w-5 h-5 text-primary" />
-                  <span>Live Tracking: Order #{trackingModalOrder._id.slice(-6).toUpperCase()}</span>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-in fade-in">
+          <div className="bg-surface dark:bg-card w-full max-w-3xl rounded-2xl shadow-2xl flex flex-col border border-border-main overflow-hidden max-h-[92vh]">
+            <div className="flex justify-between items-center p-4 sm:p-5 border-b border-border-main bg-surface shrink-0">
+              <div className="min-w-0 pr-2">
+                <h3 className="text-base font-bold text-text-main flex items-center gap-2 truncate">
+                  <MapPin className="w-5 h-5 text-primary shrink-0" />
+                  <span className="truncate">Live Tracking: #{trackingModalOrder._id.slice(-6).toUpperCase()}</span>
                 </h3>
-                <p className="text-xs text-muted">
+                <p className="text-xs text-muted truncate mt-0.5">
                   Assigned Partner: {trackingData?.deliveryPartner?.name || "Unassigned"}
                 </p>
               </div>
-              <button onClick={() => setTrackingModalOrder(null)} className="text-muted hover:text-text-main">
+              <button 
+                onClick={() => setTrackingModalOrder(null)} 
+                className="p-1 text-muted hover:text-text-main rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors shrink-0 ml-2"
+                aria-label="Close"
+              >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="p-6 overflow-y-auto space-y-4">
+            <div className="p-4 sm:p-6 overflow-y-auto space-y-4 flex-1">
               {trackingLoading ? (
                 <div className="p-12 text-center text-muted">
                   <RefreshCw className="w-6 h-6 text-primary animate-spin mx-auto mb-2" />
@@ -884,16 +896,16 @@ export default function AdminOrdersPage() {
                     deliveryPartnerName={trackingData?.deliveryPartner?.name}
                     isLocationStale={trackingData?.isLocationStale}
                     orderStatus={trackingData?.status || trackingModalOrder.status}
-                    height="360px"
+                    height="320px"
                   />
 
                   {/* Delivery Info */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-xs">
                     <div className="p-3 bg-surface border border-border-main rounded-xl">
                       <span className="font-semibold text-text-main block mb-1">Customer Delivery Address</span>
                       <p className="text-muted">
                         {typeof trackingModalOrder.deliveryAddress === "object"
-                          ? `${trackingModalOrder.deliveryAddress.fullName} • ${trackingModalOrder.deliveryAddress.houseNo}, ${trackingModalOrder.deliveryAddress.area}, ${trackingModalOrder.deliveryAddress.city} - ${trackingModalOrder.deliveryAddress.pincode}`
+                          ? `${trackingModalOrder.deliveryAddress.fullName || ""} • ${trackingModalOrder.deliveryAddress.houseNo || ""}, ${trackingModalOrder.deliveryAddress.area || ""}, ${trackingModalOrder.deliveryAddress.city || ""} - ${trackingModalOrder.deliveryAddress.pincode || ""}`
                           : trackingModalOrder.deliveryAddress}
                       </p>
                       <p className="text-muted mt-1 font-medium">
@@ -918,20 +930,20 @@ export default function AdminOrdersPage() {
               )}
             </div>
 
-            <div className="flex justify-end gap-3 p-4 border-t border-border-main bg-surface">
+            <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 sm:gap-3 p-3.5 sm:p-4 border-t border-border-main bg-surface shrink-0">
+              <button
+                onClick={() => setTrackingModalOrder(null)}
+                className="w-full sm:w-auto px-4 py-2 text-sm font-medium rounded-lg border border-border-main hover:bg-black/5 dark:hover:bg-white/5 transition-colors"
+              >
+                Close
+              </button>
               <Link
                 href={`/admin/orders/${trackingModalOrder._id}`}
-                className="px-4 py-2 text-sm font-medium rounded-lg text-primary border border-primary/30 hover:bg-primary/10 transition-colors flex items-center gap-1.5"
+                className="w-full sm:w-auto px-4 py-2 text-sm font-medium rounded-lg text-primary border border-primary/30 hover:bg-primary/10 transition-colors flex items-center justify-center gap-1.5"
               >
                 <span>Full Order Details</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </Link>
-              <button
-                onClick={() => setTrackingModalOrder(null)}
-                className="px-4 py-2 text-sm font-medium rounded-lg border border-border-main hover:bg-black/5 transition-colors"
-              >
-                Close
-              </button>
             </div>
           </div>
         </div>

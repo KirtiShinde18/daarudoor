@@ -91,92 +91,92 @@ export default function ProductsPage() {
   const outOfStock = products.filter(p => p.stock === 0).length;
 
   return (
-    <div className="flex flex-col min-h-screen bg-background">
-      <div className="p-8 space-y-8 flex-1 w-full max-w-7xl mx-auto">
+    <div className="space-y-6">
+      {/* Header & Stats */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-text-main dark:text-text-main">
+            Products Catalog
+          </h1>
+          <p className="text-xs sm:text-sm text-muted mt-1">Manage your catalog, pricing, and inventory.</p>
+        </div>
+        <button
+          onClick={handleOpenCreateModal}
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-5 py-2.5 bg-primary text-white rounded-xl hover:bg-primary-light active:bg-primary-dark transition-all shadow-sm hover:shadow-md font-medium"
+        >
+          <Plus className="w-5 h-5" />
+          <span>Add Product 📦</span>
+        </button>
+      </div>
 
-        {/* Header & Stats */}
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <div>
-            {/* <h1 className="text-3xl font-bold text-text-main">Products 📦</h1> */}
-            <p className="text-muted mt-1">Manage your catalog, pricing, and inventory.</p>
+      {/* Stats Row */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+        <div className="bg-surface dark:bg-surface border border-border-main p-5 sm:p-6 rounded-2xl flex items-center gap-4 shadow-sm">
+          <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-500 flex items-center justify-center shrink-0">
+            <Package className="w-6 h-6" />
           </div>
-          <button
-            onClick={handleOpenCreateModal}
-            className="flex items-center gap-2 px-5 py-2.5 bg-primary text-white rounded-xl hover:bg-primary-light active:bg-primary-dark transition-all shadow-sm hover:shadow-md font-medium"
+          <div className="min-w-0">
+            <p className="text-sm font-medium text-muted truncate">Total Products</p>
+            <h3 className="text-2xl font-bold text-text-main">{totalProducts}</h3>
+          </div>
+        </div>
+        <div className="bg-surface dark:bg-surface border border-border-main p-5 sm:p-6 rounded-2xl flex items-center gap-4 shadow-sm">
+          <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-500 flex items-center justify-center shrink-0">
+            <CheckCircle className="w-6 h-6" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-medium text-muted truncate">Active Listing</p>
+            <h3 className="text-2xl font-bold text-text-main">{activeProducts}</h3>
+          </div>
+        </div>
+        <div className="bg-surface dark:bg-surface border border-border-main p-5 sm:p-6 rounded-2xl flex items-center gap-4 shadow-sm">
+          <div className="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-500 flex items-center justify-center shrink-0">
+            <AlertCircle className="w-6 h-6" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-sm font-medium text-muted truncate">Out of Stock</p>
+            <h3 className="text-2xl font-bold text-text-main">{outOfStock}</h3>
+          </div>
+        </div>
+      </div>
+
+      {/* Filters & Search */}
+      <div className="bg-surface dark:bg-surface border border-border-main p-3.5 sm:p-4 rounded-2xl flex flex-col sm:flex-row gap-3 sm:gap-4 items-center shadow-sm">
+        <div className="relative flex-1 w-full">
+          <Search className="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-muted" />
+          <input
+            type="text"
+            placeholder="Search products by name or brand..."
+            value={searchTerm}
+            onChange={e => setSearchTerm(e.target.value)}
+            className="w-full pl-10 sm:pl-12 pr-4 py-2.5 sm:py-3 bg-background border border-border-main rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-text-main text-sm transition-all"
+          />
+        </div>
+        <div className="relative w-full sm:w-auto sm:min-w-[200px]">
+          <Filter className="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 w-4 sm:w-5 h-4 sm:h-5 text-muted" />
+          <select
+            value={categoryFilter}
+            onChange={e => setCategoryFilter(e.target.value)}
+            className="w-full pl-10 sm:pl-12 pr-10 py-2.5 sm:py-3 bg-background border border-border-main rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-text-main text-sm appearance-none cursor-pointer transition-all"
           >
-            <Plus className="w-5 h-5" />
-            Add Product 📦
-          </button>
+            <option value="">All Categories</option>
+            <option value="Whiskey">Whiskey</option>
+            <option value="Vodka">Vodka</option>
+            <option value="Rum">Rum</option>
+            <option value="Beer">Beer</option>
+            <option value="Wine">Wine</option>
+            <option value="Gin">Gin</option>
+            <option value="Tequila">Tequila</option>
+            <option value="Mixers">Mixers</option>
+            <option value="Snacks">Snacks</option>
+          </select>
         </div>
+      </div>
 
-        {/* Stats Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-surface dark:bg-surface border border-border-main p-6 rounded-2xl flex items-center gap-4 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-500 flex items-center justify-center">
-              <Package className="w-6 h-6" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-muted">Total Products</p>
-              <h3 className="text-2xl font-bold text-text-main">{totalProducts}</h3>
-            </div>
-          </div>
-          <div className="bg-surface dark:bg-surface border border-border-main p-6 rounded-2xl flex items-center gap-4 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-500 flex items-center justify-center">
-              <CheckCircle className="w-6 h-6" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-muted">Active Listing</p>
-              <h3 className="text-2xl font-bold text-text-main">{activeProducts}</h3>
-            </div>
-          </div>
-          <div className="bg-surface dark:bg-surface border border-border-main p-6 rounded-2xl flex items-center gap-4 shadow-sm">
-            <div className="w-12 h-12 rounded-xl bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-500 flex items-center justify-center">
-              <AlertCircle className="w-6 h-6" />
-            </div>
-            <div>
-              <p className="text-sm font-medium text-muted">Out of Stock</p>
-              <h3 className="text-2xl font-bold text-text-main">{outOfStock}</h3>
-            </div>
-          </div>
-        </div>
-
-        {/* Filters & Search */}
-        <div className="bg-surface dark:bg-surface border border-border-main p-4 rounded-2xl flex flex-col md:flex-row gap-4 items-center shadow-sm">
-          <div className="relative flex-1 w-full">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
-            <input
-              type="text"
-              placeholder="Search products by name or brand..."
-              value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-3 bg-background border border-border-main rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-text-main transition-all"
-            />
-          </div>
-          <div className="relative min-w-[200px] w-full md:w-auto">
-            <Filter className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-muted" />
-            <select
-              value={categoryFilter}
-              onChange={e => setCategoryFilter(e.target.value)}
-              className="w-full pl-12 pr-10 py-3 bg-background border border-border-main rounded-xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary text-text-main appearance-none cursor-pointer transition-all"
-            >
-              <option value="">All Categories</option>
-              <option value="Whiskey">Whiskey</option>
-              <option value="Vodka">Vodka</option>
-              <option value="Rum">Rum</option>
-              <option value="Beer">Beer</option>
-              <option value="Wine">Wine</option>
-              <option value="Gin">Gin</option>
-              <option value="Tequila">Tequila</option>
-              <option value="Mixers">Mixers</option>
-              <option value="Snacks">Snacks</option>
-            </select>
-          </div>
-        </div>
-
-        {/* Table */}
-        <div className="bg-surface dark:bg-surface border border-border-main rounded-2xl shadow-sm overflow-hidden flex flex-col">
-          <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse">
+      {/* Table */}
+      <div className="bg-surface dark:bg-surface border border-border-main rounded-2xl shadow-sm overflow-hidden flex flex-col">
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[700px] text-left border-collapse">
               <thead>
                 <tr className="border-b border-border-main bg-background/50">
                   <th className="px-6 py-4 text-xs font-semibold text-muted uppercase tracking-wider">Product</th>
@@ -262,7 +262,7 @@ export default function ProductsPage() {
                         </span>
                       </td>
                       <td className="px-6 py-4 text-right">
-                        <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <div className="flex items-center justify-end gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                           <button
                             onClick={() => handleOpenEditModal(product)}
                             className="p-2 text-muted hover:text-primary hover:bg-primary/10 rounded-lg transition-colors"
@@ -286,7 +286,6 @@ export default function ProductsPage() {
             </table>
           </div>
         </div>
-      </div>
 
       <ProductModal
         isOpen={isModalOpen}

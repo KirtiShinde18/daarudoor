@@ -120,43 +120,44 @@ export function ProductModal({ isOpen, onClose, onSubmit, initialData }: Product
     <div className="fixed inset-0 z-[100] flex flex-col bg-background dark:bg-background animate-in fade-in duration-300">
 
       {/* Header */}
-      <header className="sticky top-0 z-10 flex items-center justify-between px-6 py-4 bg-surface dark:bg-surface border-b border-border-main shadow-sm">
-        <div className="flex items-center gap-4">
+      <header className="sticky top-0 z-10 flex items-center justify-between px-4 sm:px-6 py-3.5 sm:py-4 bg-surface dark:bg-surface border-b border-border-main shadow-sm">
+        <div className="flex items-center gap-3 sm:gap-4 min-w-0 pr-2">
           <button
             type="button"
             onClick={handleCloseAttempt}
-            className="p-2 -ml-2 rounded-full hover:bg-background text-muted hover:text-text-main transition-colors"
+            className="p-1.5 sm:p-2 -ml-1 sm:-ml-2 rounded-full hover:bg-background text-muted hover:text-text-main transition-colors shrink-0"
+            aria-label="Back"
           >
-            <ArrowLeft className="w-6 h-6" />
+            <ArrowLeft className="w-5 sm:w-6 h-5 sm:h-6" />
           </button>
-          <div>
-            <h1 className="text-xl font-bold text-text-main">
+          <div className="min-w-0">
+            <h1 className="text-lg sm:text-xl font-bold text-text-main truncate">
               {initialData ? "Edit Product" : "Add New Product"}
             </h1>
-            <p className="text-sm text-muted hidden sm:block">
+            <p className="text-xs sm:text-sm text-muted hidden sm:block truncate">
               {initialData ? "Update the details, pricing, and inventory." : "Fill in the details to list a new product in the catalog."}
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <button
             type="button"
             onClick={handleCloseAttempt}
-            className="hidden sm:block px-5 py-2.5 rounded-xl border border-border-main text-text-main font-medium hover:bg-background transition-colors"
+            className="hidden sm:block px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl border border-border-main text-text-main font-medium hover:bg-background transition-colors text-sm"
           >
             Cancel
           </button>
           <button
             onClick={handleSubmit}
             disabled={isLoading || (!isDirty && !initialData)}
-            className="px-6 py-2.5 rounded-xl bg-primary text-white font-medium hover:bg-primary-light active:bg-primary-dark transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-sm shadow-primary/20 hover:shadow-md flex items-center gap-2"
+            className="px-4 sm:px-6 py-2 sm:py-2.5 rounded-xl bg-primary text-white font-medium hover:bg-primary-light active:bg-primary-dark transition-all disabled:opacity-70 disabled:cursor-not-allowed shadow-sm shadow-primary/20 hover:shadow-md flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm"
           >
             {isLoading ? (
-              <> <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Saving... </>
+              <> <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /> Saving... </>
             ) : (
               <>
-                <CheckCircle2 className="w-5 h-5" />
-                {initialData ? "Save Changes" : "Save Product"}
+                <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span>{initialData ? "Save Changes" : "Save Product"}</span>
               </>
             )}
           </button>
@@ -165,7 +166,7 @@ export function ProductModal({ isOpen, onClose, onSubmit, initialData }: Product
 
       {/* Main Content Area */}
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-5 sm:py-8">
           <div className="flex flex-col lg:flex-row gap-8 items-start">
 
             {/* Left Column: Form Sections */}
@@ -355,15 +356,15 @@ export function ProductModal({ isOpen, onClose, onSubmit, initialData }: Product
                 <div className="p-6 border-b border-border-main">
                   <h2 className="text-lg font-bold text-text-main">Product Settings ⚙️</h2>
                 </div>
-                <div className="p-6">
-                  <div className="flex items-center justify-between p-4 bg-background border border-border-main rounded-xl">
+                <div className="p-4 sm:p-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-background border border-border-main rounded-xl gap-3">
                     <div>
                       <h4 className="font-semibold text-text-main">Product Status</h4>
                       <p className="text-sm text-muted">Determine if this product is visible to customers.</p>
                     </div>
 
                     {/* Beautiful Toggle */}
-                    <div className="relative inline-flex h-10 w-48 rounded-lg bg-border-main/50 p-1">
+                    <div className="relative inline-flex h-10 w-full sm:w-48 rounded-lg bg-border-main/50 p-1 shrink-0">
                       <button
                         type="button"
                         onClick={() => handleChange("status", "Active")}

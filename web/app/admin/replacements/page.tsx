@@ -62,15 +62,21 @@ export default function ReplacementsPage() {
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-        <div className="flex w-full sm:w-auto space-x-4">
-          <div className="relative flex-1 sm:w-64">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-text-main dark:text-text-main">
+            Replacement Requests
+          </h1>
+          <p className="text-xs sm:text-sm text-muted mt-1">Review and manage customer replacement inquiries.</p>
+        </div>
+        <div className="flex w-full sm:w-auto">
+          <div className="relative w-full sm:w-72">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
             <input
               type="text"
               placeholder="Search order or customer..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full pl-9 pr-4 py-2 rounded-xl border border-border-main bg-surface dark:bg-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/20"
+              className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-border-main bg-surface dark:bg-surface text-sm focus:outline-none focus:ring-2 focus:ring-primary/20 text-text-main"
             />
           </div>
         </div>
@@ -78,7 +84,7 @@ export default function ReplacementsPage() {
 
       <div className="bg-surface dark:bg-surface rounded-xl shadow-sm border border-border-main overflow-hidden">
         <div className="overflow-x-auto">
-          <table className="w-full text-left text-sm">
+          <table className="w-full min-w-[650px] text-left text-sm">
             <thead className="bg-background dark:bg-black border-b border-border-main text-muted">
               <tr>
                 <th className="px-6 py-4 font-medium">Order ID</th>
