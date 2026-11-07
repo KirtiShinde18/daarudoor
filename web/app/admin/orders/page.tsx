@@ -651,7 +651,7 @@ export default function AdminOrdersPage() {
       {/* ASSIGN / REASSIGN MODAL */}
       {assignModalOrder && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-background-main w-full max-w-lg rounded-2xl shadow-2xl flex flex-col border border-border-main overflow-hidden">
+          <div className="bg-surface dark:bg-card w-full max-w-lg rounded-2xl shadow-2xl flex flex-col border border-border-main overflow-hidden">
             <div className="flex justify-between items-center p-5 border-b border-border-main bg-surface">
               <h3 className="text-base font-bold text-text-main flex items-center gap-2">
                 <Truck className="w-5 h-5 text-primary" />
@@ -732,7 +732,7 @@ export default function AdminOrdersPage() {
       {/* UPDATE STATUS MODAL */}
       {statusModalOrder && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-background-main w-full max-w-lg rounded-2xl shadow-2xl flex flex-col border border-border-main overflow-hidden">
+          <div className="bg-surface dark:bg-card w-full max-w-lg rounded-2xl shadow-2xl flex flex-col border border-border-main overflow-hidden">
             <div className="flex justify-between items-center p-5 border-b border-border-main bg-surface">
               <h3 className="text-base font-bold text-text-main flex items-center gap-2">
                 <UserCheck className="w-5 h-5 text-primary" />
@@ -839,7 +839,7 @@ export default function AdminOrdersPage() {
       {/* LIVE ORDER TRACKING MODAL */}
       {trackingModalOrder && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="bg-background-main w-full max-w-3xl rounded-2xl shadow-2xl flex flex-col border border-border-main overflow-hidden max-h-[90vh]">
+          <div className="bg-surface dark:bg-card w-full max-w-3xl rounded-2xl shadow-2xl flex flex-col border border-border-main overflow-hidden max-h-[90vh]">
             <div className="flex justify-between items-center p-5 border-b border-border-main bg-surface">
               <div>
                 <h3 className="text-base font-bold text-text-main flex items-center gap-2">

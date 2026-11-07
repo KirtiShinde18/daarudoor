@@ -8,6 +8,7 @@
   --color-primary-light: var(--primary-light);
   
   --color-background: var(--background);
+  --color-background-main: var(--background);
   --color-surface: var(--surface);
   --color-card: var(--card);
   
